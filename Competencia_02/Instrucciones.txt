@@ -1,0 +1,39 @@
+Preparación de datos
+
+Se unifican todos los meses disponibles, se limpian variables y se generan features básicas (lags, ratios, etc.).
+
+Target y particionado temporal
+
+Se define clase_ternaria (CONTINUA, BAJA+1, BAJA+2).
+
+Para entrenar se crea clase01 (BAJA+1 y BAJA+2 = 1, CONTINUA = 0).
+
+Se fijan meses de training y se reserva un mes tipo “future” para backtesting (202106) y otro para scoring final (202108).
+
+Canaritos y undersampling
+
+Se agregan variables canarito con ruido para poder detectar overfitting.
+
+Se aplica undersampling sobre la clase mayoritaria para balancear el entrenamiento.
+
+Entrenamiento de “modelitos” (ensemble)
+
+Se entrenan múltiples LightGBM con distintas semillas y meta_modelos; cada modelo se guarda en disco (./modelitos/mod_*.txt).
+
+Backtesting en 202106
+
+Se aplica el ensemble (promedio por seeds y luego por meta_modelos) sobre 202106.
+
+Se ordenan los clientes por score y, para varios cortes (N envíos), se calcula la ganancia usando la función de negocio: –20.000 para no BAJA+2, +780.000 para BAJA+2.
+
+Se elige corte_mejor como el N que maximiza la ganancia en 202106.
+
+Scoring final en 202108 y submit
+
+Se aplica el mismo ensemble sobre 202108, se ordena por score y se marcan como Predicted = 1 los primeros corte_mejor clientes.
+
+Se genera el CSV final con numero_de_cliente y Predicted para enviar a Kaggle.
+
+Limitación importante
+
+LAMENTABLEMENTE y EN CONTRA DE MI VOLUNTAD no pude optimizar los hiperparámetros ni la configuración de los “modelitos” de la mejor forma posible luego de incorporar los canaritos y de fijar el valor final del undersampling, por lo que el modelo y el ensemble son funcionales pero no necesariamente óptimos desde el punto de vista de tuning.
