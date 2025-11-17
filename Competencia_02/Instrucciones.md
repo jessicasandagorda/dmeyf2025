@@ -1,4 +1,4 @@
-# Workflow general (resumido)
+# Workflow general
 
 1. **Preparación de datos**  
    Se unifican todos los meses disponibles, se limpian variables y se generan _features_ básicas (lags, ratios, etc.).
@@ -8,9 +8,12 @@
    Para entrenar se crea `clase01` (`BAJA+1` y `BAJA+2` = 1, `CONTINUA` = 0).  
    Se fijan meses de *training* y se reserva un mes tipo “future” para **backtesting** (202106) y otro para **scoring final** (202108).
 
-3. **Canaritos y undersampling**  
-   Se agregan variables `canarito_*` con ruido para poder detectar overfitting.  
-   Se aplica **undersampling** sobre la clase mayoritaria para balancear el entrenamiento.
+3. **Feature engineering, canaritos y calidad de datos**  
+
+   - **Control de data drifting**: transformación de ranking con cero fijo para estabilizar la distribución de las variables numéricas entre meses.  
+   - **Limpieza de variables inútiles**: todas las variables con 100% de ceros se reemplazan por `NA` (o se eliminan del set de entrenamiento) para evitar ruido en el modelo.  
+   - Se agregan variables `canarito_*` con ruido para poder detectar overfitting.  
+   - Se aplica **undersampling** sobre la clase mayoritaria para balancear el entrenamiento.
 
 4. **Entrenamiento de “modelitos” (ensemble)**  
    Se entrenan múltiples modelos LightGBM con distintas semillas y meta_modelos;  
@@ -27,4 +30,4 @@
    Se genera el CSV final con `numero_de_cliente` y `Predicted` para enviar a Kaggle.
 
 7. **Limitación importante**  
-   **LAMENTABLEMENTE y EN CONTRA DE MI VOLUNTAD no pude optimizar los hiperparámetros ni la configuración de los “modelitos” de la mejor forma posible** luego de incorporar los canaritos y de fijar el valor final del undersampling, por lo que el modelo y el ensemble son funcionales pero no necesariamente óptimos desde el punto de vista de _tuning_.
+   **LAMENTABLEMENTE y EN CONTRA DE MI VOLUNTAD no pude optimizar los hiperparámetros ni la configuración de los “modelitos” de la mejor forma posible** luego de incorporar los canaritos y de fijar el valor final del undersampling, por lo que el modelo y el ensemble son funcionales pero no necesariamente óptimos.
