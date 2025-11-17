@@ -31,3 +31,7 @@
 
 7. **Limitación importante**  
    **LAMENTABLEMENTE y EN CONTRA DE MI VOLUNTAD no pude optimizar los hiperparámetros ni la configuración de los “modelitos” de la mejor forma posible** luego de incorporar los canaritos y de fijar el valor final del undersampling, por lo que el modelo y el ensemble son funcionales pero no necesariamente óptimos.
+
+Link a la carpeta del experimento con OB y modelitos: 
+https://drive.google.com/drive/folders/16Tkm8OKcm4fzrExMENi1Asl7Mp4XFSKQ?usp=drive_link
+   
