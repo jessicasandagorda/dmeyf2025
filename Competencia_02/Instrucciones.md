@@ -27,7 +27,7 @@
 
 6. **Scoring final en 202108 y submit**  
    Se aplica el mismo ensemble sobre 202108, se ordena por _score_ y se marcan como `Predicted = 1` los primeros `corte_mejor` clientes.  
-   Se genera el CSV final con `numero_de_cliente` y `Predicted` para enviar a Kaggle.
+   Se genera el CSV final con `numero_de_cliente` y `Predicted` para enviar a Dos Esfinges (Zulip).
 
 7. **Limitación importante**  
    **LAMENTABLEMENTE y EN CONTRA DE MI VOLUNTAD no pude optimizar los hiperparámetros ni la configuración de los “modelitos” de la mejor forma posible** luego de incorporar los canaritos y de fijar el valor final del undersampling, por lo que el modelo y el ensemble son funcionales pero no necesariamente óptimos.
